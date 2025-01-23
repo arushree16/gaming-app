@@ -10,6 +10,7 @@ import Register from './pages/Register';
 import Layout from './components/shared/Layout';
 import { AuthContext } from './context/AuthContext'; // Import your AuthContext
 import WebSocketService from './services/WebSocketService'; // Import your WebSocket service
+import PrivateRoute from './components/shared/PrivateRoute';
 
 
 const theme = createTheme();
@@ -48,22 +49,10 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route
-              path="/"
-              element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/analytics"
-              element={isAuthenticated ? <GameAnalytics /> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/behavior"
-              element={isAuthenticated ? <BehaviorTracking /> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/settings"
-              element={isAuthenticated ? <Settings /> : <Navigate to="/login" />}
-            />
+            <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+            <Route path="/analytics" element={<PrivateRoute><GameAnalytics /></PrivateRoute>} />
+            <Route path="/behavior" element={<PrivateRoute><BehaviorTracking /></PrivateRoute>} />
+            <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
           </Routes>
         </Layout>
       </Router>
